@@ -7,9 +7,16 @@
       "description": "Велика переговорна з проектором",
       "capacity": 10,
       "availableUnits": 1,
-      "totalUnits": 1,
-      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-      "image": "/images/meeting-room.jpg"
+      "totalUnits": 10,
+      "timeSlots": [
+        "09:00",
+        "10:00",
+        "11:00",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "image": "/images/meeting-room.webp"
     },
     {
       "id": 2,
@@ -17,10 +24,17 @@
       "type": "equipment",
       "description": "Ноутбук для презентацій",
       "capacity": 1,
-      "availableUnits": 3,
+      "availableUnits": 5,
       "totalUnits": 5,
-      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-      "image": "/images/laptop.jpg"
+      "timeSlots": [
+        "09:00",
+        "10:00",
+        "11:00",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "image": "/images/laptop.webp"
     },
     {
       "id": 3,
@@ -30,8 +44,15 @@
       "capacity": 1,
       "availableUnits": 1,
       "totalUnits": 1,
-      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-      "image": "/images/workspace.jpg"
+      "timeSlots": [
+        "09:00",
+        "10:00",
+        "11:00",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "image": "/images/workspace.webp"
     },
     {
       "id": 4,
@@ -39,10 +60,17 @@
       "type": "meeting-room",
       "description": "Мала переговорна на 4 особи",
       "capacity": 4,
-      "availableUnits": 1,
-      "totalUnits": 1,
-      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-      "image": "/images/small-meeting-room.jpg"
+      "availableUnits": 3,
+      "totalUnits": 5,
+      "timeSlots": [
+        "09:00",
+        "10:00",
+        "11:00",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "image": "/images/small-meeting-room.webp"
     },
     {
       "id": 5,
@@ -50,10 +78,17 @@
       "type": "equipment",
       "description": "Проектор для презентацій",
       "capacity": 1,
-      "availableUnits": 2,
+      "availableUnits": 3,
       "totalUnits": 3,
-      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
-      "image": "/images/projector.jpg"
+      "timeSlots": [
+        "09:00",
+        "10:00",
+        "11:00",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "image": "/images/projector.webp"
     }
   ],
   "bookings": [
@@ -63,9 +98,129 @@
       "resourceName": "Переговорна А1",
       "date": "2025-07-22",
       "timeSlot": "10:00",
-      "status": "active",
+      "status": "cancelled",
       "bookedAt": "2025-07-21T10:30:00Z",
       "userId": "user1"
+    },
+    {
+      "date": "2025-07-23",
+      "timeSlot": "16:00",
+      "resourceId": 4,
+      "resourceName": "Переговорна B2",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T10:50:39.192Z",
+      "status": "cancelled",
+      "id": 2
+    },
+    {
+      "date": "2025-08-01",
+      "timeSlot": "09:00",
+      "resourceId": 2,
+      "resourceName": "MacBook Pro",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T12:19:33.741Z",
+      "status": "cancelled",
+      "id": 3
+    },
+    {
+      "date": "2025-08-14",
+      "timeSlot": "10:00",
+      "resourceId": 5,
+      "resourceName": "Проектор Epson",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T14:16:01.046Z",
+      "status": "cancelled",
+      "id": 4
+    },
+    {
+      "date": "2025-07-21",
+      "timeSlot": "11:00",
+      "resourceId": 2,
+      "resourceName": "MacBook Pro",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T15:04:55.626Z",
+      "status": "cancelled",
+      "id": 5
+    },
+    {
+      "date": "2025-08-14",
+      "timeSlot": "09:00",
+      "resourceId": 2,
+      "resourceName": "MacBook Pro",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T15:05:04.768Z",
+      "status": "cancelled",
+      "id": 6
+    },
+    {
+      "date": "2025-08-13",
+      "timeSlot": "09:00",
+      "resourceId": 2,
+      "resourceName": "MacBook Pro",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T15:05:11.474Z",
+      "status": "active",
+      "id": 7
+    },
+    {
+      "date": "2025-07-21",
+      "timeSlot": "09:00",
+      "resourceId": 2,
+      "resourceName": "MacBook Pro",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T15:05:42.626Z",
+      "status": "active",
+      "id": 8
+    },
+    {
+      "date": "2025-07-21",
+      "timeSlot": "11:00",
+      "resourceId": 2,
+      "resourceName": "MacBook Pro",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T15:08:05.047Z",
+      "status": "active",
+      "id": 9
+    },
+    {
+      "date": "2025-07-25",
+      "timeSlot": "09:00",
+      "resourceId": 1,
+      "resourceName": "Переговорна А1",
+      "userId": "test-user",
+      "bookedAt": "2025-07-21T15:13:07.981Z",
+      "status": "active",
+      "id": 10
+    },
+    {
+      "date": "2025-07-22",
+      "timeSlot": "09:00",
+      "resourceId": 4,
+      "resourceName": "Переговорна B2",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T15:22:54.494Z",
+      "status": "cancelled",
+      "id": 11
+    },
+    {
+      "date": "2025-07-22",
+      "timeSlot": "09:00",
+      "resourceId": 1,
+      "resourceName": "Переговорна А1",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T15:59:16.057Z",
+      "status": "active",
+      "id": 12
+    },
+    {
+      "date": "2025-07-21",
+      "timeSlot": "16:00",
+      "resourceId": 1,
+      "resourceName": "Переговорна А1",
+      "userId": "user1",
+      "bookedAt": "2025-07-21T15:59:31.795Z",
+      "status": "cancelled",
+      "id": 13
     }
   ]
 }
