@@ -1,0 +1,71 @@
+{
+  "resources": [
+    {
+      "id": 1,
+      "name": "Переговорна А1",
+      "type": "meeting-room",
+      "description": "Велика переговорна з проектором",
+      "capacity": 10,
+      "availableUnits": 1,
+      "totalUnits": 1,
+      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+      "image": "/images/meeting-room.jpg"
+    },
+    {
+      "id": 2,
+      "name": "MacBook Pro",
+      "type": "equipment",
+      "description": "Ноутбук для презентацій",
+      "capacity": 1,
+      "availableUnits": 3,
+      "totalUnits": 5,
+      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+      "image": "/images/laptop.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Робоче місце №12",
+      "type": "workspace",
+      "description": "Робоче місце з великим монітором",
+      "capacity": 1,
+      "availableUnits": 1,
+      "totalUnits": 1,
+      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+      "image": "/images/workspace.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Переговорна B2",
+      "type": "meeting-room",
+      "description": "Мала переговорна на 4 особи",
+      "capacity": 4,
+      "availableUnits": 1,
+      "totalUnits": 1,
+      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+      "image": "/images/small-meeting-room.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Проектор Epson",
+      "type": "equipment",
+      "description": "Проектор для презентацій",
+      "capacity": 1,
+      "availableUnits": 2,
+      "totalUnits": 3,
+      "timeSlots": ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"],
+      "image": "/images/projector.jpg"
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1,
+      "resourceId": 1,
+      "resourceName": "Переговорна А1",
+      "date": "2025-07-22",
+      "timeSlot": "10:00",
+      "status": "active",
+      "bookedAt": "2025-07-21T10:30:00Z",
+      "userId": "user1"
+    }
+  ]
+}
