@@ -40,6 +40,7 @@
 - **Axios** - HTTP-запити
 - **Tailwind CSS** - Стилізація
 - **date-fns** - Робота з датами
+- **React Icons** - Іконки та візуальні елементи
 - **json-server** - Mock API
 - **Vite** - Збірка та розробка
 
@@ -57,8 +58,10 @@ src/
 │   │   └── BookingCard.jsx      # Картка бронювання
 │   └── UI/
 │       ├── LoadingSpinner.jsx   # Індикатор завантаження
+│       ├── FullScreenLoader.jsx # Повноекранний індикатор завантаження
 │       ├── ErrorMessage.jsx     # Повідомлення про помилки
-│       └── SuccessMessage.jsx   # Повідомлення про успіх
+│       ├── SuccessMessage.jsx   # Повідомлення про успіх
+│       └── ConfirmationModal.jsx # Модальне вікно підтвердження
 ├── pages/
 │   ├── HomePage.jsx             # Головна сторінка
 │   ├── ResourcesPage.jsx        # Список ресурсів
