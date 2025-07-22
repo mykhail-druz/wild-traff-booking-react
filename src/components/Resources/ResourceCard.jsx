@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useMemo, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { 
   HiOfficeBuilding, 
@@ -8,25 +8,26 @@ import {
 } from 'react-icons/hi'
 
 const ResourceCard = memo(({ resource }) => {
-  const getResourceTypeLabel = (type) => {
+
+  const resourceTypeLabel = useMemo(() => {
     const types = {
       'meeting-room': 'Переговорна кімната',
       'equipment': 'Обладнання',
       'workspace': 'Робоче місце'
     }
-    return types[type] || type
-  }
+    return types[resource.type] || resource.type
+  }, [resource.type])
 
-  const getResourceIcon = (type) => {
+  const resourceIcon = useMemo(() => {
     const icons = {
       'meeting-room': HiOfficeBuilding,
       'equipment': HiDesktopComputer,
       'workspace': HiUserGroup
     }
-    return icons[type] || HiCube
-  }
+    return icons[resource.type] || HiCube
+  }, [resource.type])
 
-  const getAvailabilityStatus = () => {
+  const availabilityStatus = useMemo(() => {
     if (resource.availableUnits === 0) {
       return {
         text: 'Недоступно',
@@ -43,9 +44,17 @@ const ResourceCard = memo(({ resource }) => {
         color: 'text-green-600 bg-green-100'
       }
     }
-  }
+  }, [resource.availableUnits, resource.totalUnits])
 
-  const availabilityStatus = getAvailabilityStatus()
+  const progressBarWidth = useMemo(() => 
+    `${(resource.availableUnits / resource.totalUnits) * 100}%`,
+    [resource.availableUnits, resource.totalUnits]
+  )
+
+  const handleImageError = useCallback((e) => {
+    e.target.style.display = 'none'
+    e.target.nextSibling.style.display = 'flex'
+  }, [])
 
   return (
     <div className="bg-white/80 backdrop-blur-md rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-500 group animate-fade-in-up hover:glow border border-white/20 hover:border-blue-200/50 relative">
@@ -66,20 +75,16 @@ const ResourceCard = memo(({ resource }) => {
             src={resource.image} 
             alt={resource.name}
             className="w-full h-full object-cover transition-transform duration-600"
-            onError={(e) => {
-              e.target.style.display = 'none'
-              e.target.nextSibling.style.display = 'flex'
-            }}
+            onError={handleImageError}
           />
         ) : null}
         <div 
           className={`flex items-center justify-center w-full h-full ${resource.image ? 'hidden' : 'flex'} relative z-10`}
           style={{ display: resource.image ? 'none' : 'flex' }}
         >
-          {(() => {
-            const IconComponent = getResourceIcon(resource.type)
-            return <IconComponent className="w-24 h-24 text-blue-600 group-hover:text-blue-700 transition-all duration-400 animate-float" />
-          })()}
+          {React.createElement(resourceIcon, {
+            className: "w-24 h-24 text-blue-600 group-hover:text-blue-700 transition-all duration-400 animate-float"
+          })}
         </div>
       </div>
 
@@ -88,7 +93,7 @@ const ResourceCard = memo(({ resource }) => {
         {/* Type Badge */}
         <div className="flex items-center justify-between mb-3">
           <span className="inline-block px-3 py-1 text-xs font-medium bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 rounded-full group-hover:from-blue-200 group-hover:to-blue-300 transition-all duration-300 animate-slide-in-left">
-            {getResourceTypeLabel(resource.type)}
+            {resourceTypeLabel}
           </span>
           <span className={`inline-block px-2 py-1 text-xs font-medium rounded-full transition-all duration-300 animate-slide-in-right ${availabilityStatus.color}`}>
             {availabilityStatus.text}

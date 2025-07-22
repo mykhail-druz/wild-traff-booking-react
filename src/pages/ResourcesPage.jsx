@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { fetchResources } from '../store/slices/resourcesSlice'
@@ -12,7 +12,7 @@ import {
 import { selectFilteredResources } from '../store/slices/filtersSlice'
 import ResourceCard from '../components/Resources/ResourceCard'
 import ResourceFilters from '../components/Resources/ResourceFilters'
-import LoadingSpinner from '../components/UI/LoadingSpinner'
+import FullScreenLoader from '../components/UI/FullScreenLoader'
 import ErrorMessage from '../components/UI/ErrorMessage'
 
 const ResourcesPage = () => {
@@ -92,12 +92,17 @@ const ResourcesPage = () => {
     return { total, available, types }
   }, [filteredResources])
 
+  const handleRetry = useCallback(() => {
+    dispatch(fetchResources())
+  }, [dispatch])
+
+  const handleResetFilters = useCallback(() => {
+    dispatch(setSearchTerm(''))
+    dispatch(setSelectedType('all'))
+  }, [dispatch])
+
   if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <LoadingSpinner size="large" />
-      </div>
-    )
+    return <FullScreenLoader />
   }
 
   if (error) {
@@ -105,7 +110,7 @@ const ResourcesPage = () => {
       <div className="max-w-md mx-auto">
         <ErrorMessage 
           message={error} 
-          onRetry={() => dispatch(fetchResources())}
+          onRetry={handleRetry}
         />
       </div>
     )
@@ -175,10 +180,7 @@ const ResourcesPage = () => {
             Спробуйте змінити фільтри або пошуковий запит для кращих результатів
           </p>
           <button
-            onClick={() => {
-              dispatch(setSearchTerm(''))
-              dispatch(setSelectedType('all'))
-            }}
+            onClick={handleResetFilters}
             className="btn btn-primary transform hover:scale-105 hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
           >
             <span className="relative z-10">Скинути фільтри</span>

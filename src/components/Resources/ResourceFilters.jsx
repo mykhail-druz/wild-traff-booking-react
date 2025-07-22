@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react'
+import React, { memo, useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setSearchTerm,
@@ -53,21 +53,41 @@ const ResourceFilters = memo(() => {
     dispatch(resetFilters())
   }, [dispatch])
 
-  const resourceTypes = [
+  const resourceTypes = useMemo(() => [
     { value: 'all', label: 'Всі типи', icon: HiClipboardList },
     { value: 'meeting-room', label: 'Переговорні', icon: TbPodium },
     { value: 'equipment', label: 'Обладнання', icon: HiDesktopComputer },
     { value: 'workspace', label: 'Робочі місця', icon: HiUserGroup }
-  ]
+  ], [])
 
-  const sortOptions = [
+  const sortOptions = useMemo(() => [
     { value: 'name', label: 'Назва' },
     { value: 'type', label: 'Тип' },
     { value: 'capacity', label: 'Місткість' },
     { value: 'availability', label: 'Доступність' }
-  ]
+  ], [])
 
-  const hasActiveFilters = searchTerm || selectedType !== 'all' || showOnlyAvailable || sortBy !== 'name' || sortOrder !== 'asc'
+  const hasActiveFilters = useMemo(() => 
+    searchTerm || selectedType !== 'all' || showOnlyAvailable || sortBy !== 'name' || sortOrder !== 'asc',
+    [searchTerm, selectedType, showOnlyAvailable, sortBy, sortOrder]
+  )
+
+  const handleClearSearch = useCallback(() => {
+    dispatch(setSearchTerm(''))
+  }, [dispatch])
+
+  const handleClearType = useCallback(() => {
+    dispatch(setSelectedType('all'))
+  }, [dispatch])
+
+  const handleClearSort = useCallback(() => {
+    dispatch(setSortBy('name'))
+    dispatch(setSortOrder('asc'))
+  }, [dispatch])
+
+  const handleClearAvailability = useCallback(() => {
+    dispatch(setShowOnlyAvailable(false))
+  }, [dispatch])
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
@@ -85,7 +105,7 @@ const ResourceFilters = memo(() => {
         />
         {searchTerm && (
           <button
-            onClick={() => dispatch(setSearchTerm(''))}
+            onClick={handleClearSearch}
             className="absolute inset-y-0 right-0 pr-3 flex items-center"
           >
             <HiX className="h-5 w-5 text-gray-400 hover:text-gray-600" />
@@ -177,7 +197,7 @@ const ResourceFilters = memo(() => {
                 <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                   Пошук: "{searchTerm}"
                   <button
-                    onClick={() => dispatch(setSearchTerm(''))}
+                    onClick={handleClearSearch}
                     className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
                   >
                     <HiX className="h-3 w-3" />
@@ -188,7 +208,7 @@ const ResourceFilters = memo(() => {
                 <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                   {resourceTypes.find(t => t.value === selectedType)?.label}
                   <button
-                    onClick={() => dispatch(setSelectedType('all'))}
+                    onClick={handleClearType}
                     className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
                   >
                     <HiX className="h-3 w-3" />
@@ -199,10 +219,7 @@ const ResourceFilters = memo(() => {
                 <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                   Сортування: {sortOptions.find(s => s.value === sortBy)?.label} {sortOrder === 'asc' ? '↑' : '↓'}
                   <button
-                    onClick={() => {
-                      dispatch(setSortBy('name'))
-                      dispatch(setSortOrder('asc'))
-                    }}
+                    onClick={handleClearSort}
                     className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
                   >
                     <HiX className="h-3 w-3" />
@@ -213,7 +230,7 @@ const ResourceFilters = memo(() => {
                 <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                   Тільки доступні
                   <button
-                    onClick={() => dispatch(setShowOnlyAvailable(false))}
+                    onClick={handleClearAvailability}
                     className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
                   >
                     <HiX className="h-3 w-3" />

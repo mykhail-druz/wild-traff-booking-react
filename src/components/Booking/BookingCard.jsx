@@ -7,12 +7,12 @@ import {
   HiCalendar, 
   HiXCircle,
   HiBell,
-  HiOfficeBuilding, 
   HiDesktopComputer, 
   HiUserGroup,
   HiCube,
   HiInformationCircle 
 } from 'react-icons/hi'
+import {TbPodium} from "react-icons/tb";
 
 const BookingCard = memo(({ booking, onCancel, cancelLoading }) => {
   const getStatusInfo = (status) => {
@@ -37,9 +37,9 @@ const BookingCard = memo(({ booking, onCancel, cancelLoading }) => {
   }
 
   const getResourceTypeInfo = (resourceName) => {
-    // Extract type from resource name or use default
+    // Extract type from the resource name or use default
     if (resourceName.toLowerCase().includes('переговорна')) {
-      return { icon: HiOfficeBuilding, type: 'Переговорна кімната' }
+      return { icon: TbPodium, type: 'Переговорна кімната' }
     } else if (resourceName.toLowerCase().includes('macbook') || resourceName.toLowerCase().includes('проектор')) {
       return { icon: HiDesktopComputer, type: 'Обладнання' }
     } else if (resourceName.toLowerCase().includes('робоче')) {

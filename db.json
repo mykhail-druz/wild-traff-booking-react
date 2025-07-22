@@ -6,7 +6,7 @@
       "type": "meeting-room",
       "description": "Велика переговорна з проектором",
       "capacity": 10,
-      "availableUnits": 1,
+      "availableUnits": 2,
       "totalUnits": 10,
       "timeSlots": [
         "09:00",
@@ -159,7 +159,7 @@
       "resourceName": "MacBook Pro",
       "userId": "user1",
       "bookedAt": "2025-07-21T15:05:11.474Z",
-      "status": "active",
+      "status": "cancelled",
       "id": 7
     },
     {
@@ -209,7 +209,7 @@
       "resourceName": "Переговорна А1",
       "userId": "user1",
       "bookedAt": "2025-07-21T15:59:16.057Z",
-      "status": "active",
+      "status": "cancelled",
       "id": 12
     },
     {
@@ -221,6 +221,16 @@
       "bookedAt": "2025-07-21T15:59:31.795Z",
       "status": "cancelled",
       "id": 13
+    },
+    {
+      "date": "2025-08-15",
+      "timeSlot": "09:00",
+      "resourceId": 2,
+      "resourceName": "MacBook Pro",
+      "userId": "user1",
+      "bookedAt": "2025-07-22T08:59:17.688Z",
+      "status": "cancelled",
+      "id": 14
     }
   ]
 }

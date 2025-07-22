@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchResources, setSelectedResource, updateResourceAvailability } from '../store/slices/resourcesSlice'
 import { createBooking } from '../store/slices/bookingsSlice'
 import BookingForm from '../components/Booking/BookingForm'
-import LoadingSpinner from '../components/UI/LoadingSpinner'
+import FullScreenLoader from '../components/UI/FullScreenLoader'
 import ErrorMessage from '../components/UI/ErrorMessage'
 import SuccessMessage from '../components/UI/SuccessMessage'
 import { 
@@ -75,30 +75,37 @@ const ResourceDetailPage = () => {
     }
   }
 
-  const getResourceTypeLabel = (type) => {
+  const resourceTypeLabel = useMemo(() => {
+    if (!selectedResource) return ''
     const types = {
       'meeting-room': 'Переговорна кімната',
       'equipment': 'Обладнання',
       'workspace': 'Робоче місце'
     }
-    return types[type] || type
-  }
+    return types[selectedResource.type] || selectedResource.type
+  }, [selectedResource?.type])
 
-  const getResourceIcon = (type) => {
+  const resourceIcon = useMemo(() => {
+    if (!selectedResource) return HiCube
     const icons = {
       'meeting-room': HiOfficeBuilding,
       'equipment': HiDesktopComputer,
       'workspace': HiUserGroup
     }
-    return icons[type] || HiCube
-  }
+    return icons[selectedResource.type] || HiCube
+  }, [selectedResource?.type])
+
+  const handleRetry = useCallback(() => {
+    dispatch(fetchResources())
+  }, [dispatch])
+
+  const handleImageError = useCallback((e) => {
+    e.target.style.display = 'none'
+    e.target.nextSibling.style.display = 'flex'
+  }, [])
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <LoadingSpinner size="large" />
-      </div>
-    )
+    return <FullScreenLoader />
   }
 
   if (error) {
@@ -106,7 +113,7 @@ const ResourceDetailPage = () => {
       <div className="max-w-md mx-auto">
         <ErrorMessage 
           message={error} 
-          onRetry={() => dispatch(fetchResources())}
+          onRetry={handleRetry}
         />
       </div>
     )
@@ -158,20 +165,16 @@ const ResourceDetailPage = () => {
                   src={selectedResource.image} 
                   alt={selectedResource.name}
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.style.display = 'none'
-                    e.target.nextSibling.style.display = 'flex'
-                  }}
+                  onError={handleImageError}
                 />
               ) : null}
               <div 
                 className={`flex items-center justify-center w-full h-full ${selectedResource.image ? 'hidden' : 'flex'}`}
                 style={{ display: selectedResource.image ? 'none' : 'flex' }}
               >
-                {(() => {
-                  const IconComponent = getResourceIcon(selectedResource.type)
-                  return <IconComponent className="w-32 h-32 text-blue-600" />
-                })()}
+                {React.createElement(resourceIcon, {
+                  className: "w-32 h-32 text-blue-600"
+                })}
               </div>
             </div>
           </div>
@@ -180,7 +183,7 @@ const ResourceDetailPage = () => {
           <div className="md:w-1/2 p-6 space-y-4">
             <div>
               <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full mb-2">
-                {getResourceTypeLabel(selectedResource.type)}
+                {resourceTypeLabel}
               </span>
               <h1 className="text-3xl font-bold text-gray-900">
                 {selectedResource.name}

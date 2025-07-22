@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useCallback, memo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   HiHome, 
@@ -8,19 +8,27 @@ import {
   HiX 
 } from 'react-icons/hi'
 
-const Layout = ({ children }) => {
+const Layout = memo(({ children }) => {
   const location = useLocation()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const isActive = (path) => {
+  const isActive = useCallback((path) => {
     return location.pathname === path
-  }
+  }, [location.pathname])
 
-  const navItems = [
+  const navItems = useMemo(() => [
     { path: '/', label: 'Головна', icon: HiHome },
     { path: '/resources', label: 'Ресурси', icon: HiClipboardList },
     { path: '/bookings', label: 'Мої бронювання', icon: HiCalendar },
-  ]
+  ], [])
+
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(prev => !prev)
+  }, [])
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false)
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
@@ -75,7 +83,7 @@ const Layout = ({ children }) => {
             <div className="md:hidden">
               <button
                 type="button"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={toggleMobileMenu}
                 className="relative p-2 rounded-xl text-gray-600 hover:text-blue-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 group"
                 aria-label="Toggle menu"
               >
@@ -103,7 +111,7 @@ const Layout = ({ children }) => {
                     <Link
                       key={item.path}
                       to={item.path}
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={closeMobileMenu}
                       className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 relative overflow-hidden group animate-slide-in-left ${
                         isActive(item.path)
                           ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25'
@@ -153,6 +161,8 @@ const Layout = ({ children }) => {
       </footer>
     </div>
   )
-}
+})
+
+Layout.displayName = 'Layout'
 
 export default Layout

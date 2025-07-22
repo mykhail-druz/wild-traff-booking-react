@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchBookings, cancelBooking, updateExpiredBookings } from '../store/slices/bookingsSlice'
 import BookingCard from '../components/Booking/BookingCard'
-import LoadingSpinner from '../components/UI/LoadingSpinner'
+import FullScreenLoader from '../components/UI/FullScreenLoader'
 import ErrorMessage from '../components/UI/ErrorMessage'
 import ConfirmationModal from '../components/UI/ConfirmationModal'
 import { HiCalendar } from 'react-icons/hi'
@@ -18,9 +18,9 @@ const BookingsPage = () => {
   const [showCancelModal, setShowCancelModal] = useState(false)
   const [bookingToCancel, setBookingToCancel] = useState(null)
 
-  // Fetch bookings on component mount
+  // Fetch bookings on the component mount
   useEffect(() => {
-    dispatch(fetchBookings('user1')) // In real app, this would come from auth
+    dispatch(fetchBookings('user1')) // In a real app, this would come from auth
     dispatch(updateExpiredBookings())
   }, [dispatch])
 
@@ -127,11 +127,7 @@ const BookingsPage = () => {
   }
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <LoadingSpinner size="large" />
-      </div>
-    )
+    return <FullScreenLoader />
   }
 
   if (error) {
